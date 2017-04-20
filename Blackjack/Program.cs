@@ -40,11 +40,17 @@ namespace Blackjack
             {
                 if(isPlayersTurn)
                 {
-                    Card c = deck[rand.Next(deck.Count)];
-                    player.Hand.Add(c);
-                    Console.WriteLine("Card: " + c.Value);
-                    deck.Remove(c);
-                    player.Score += c.Value;
+                    
+                    if (player.Hand.Count == 0)
+                    {
+                        addPlayerCard(deck, player, rand);
+                        addPlayerCard(deck, player, rand);
+                    }
+                    else
+                    {
+                        addPlayerCard(deck, player, rand);
+                    }
+                    
                     Console.WriteLine("Player Score: " + player.Score);
                     if(player.Score > 21)
                     {
@@ -69,7 +75,7 @@ namespace Blackjack
                     Card c = deck[rand.Next(deck.Count)];
                     dealer.Hand.Add(c);
                     deck.Remove(c);
-                    dealer.Score += c.Value;
+                    dealer.Score += c.Score;
                     Console.WriteLine("Dealer Score: " + dealer.Score);
                     if (dealer.Score < 16)
                     {
@@ -97,7 +103,14 @@ namespace Blackjack
             }     
         }
 
-       
+       private static void addPlayerCard(List<Card> deck, Person player, Random rand)
+        {
+            Card c = deck[rand.Next(deck.Count)];
+            player.Hand.Add(c);
+            Console.WriteLine("Card: " + c.Face);
+            deck.Remove(c);
+            player.Score += c.Score;
+        }
 
         private static void populateDeck(List<Card> deck)
         {
@@ -111,21 +124,25 @@ namespace Blackjack
                     if(suit == 1)
                     {
                         deck.Add(new Card() {Suit = "Spades", Value = value });
+                        deck[count].setScore();
                         count++;
                     }
                     else if (suit == 2)
                     {
                         deck.Add(new Card() { Suit = "Clubs", Value = value });
+                        deck[count].setScore();
                         count++;
                     }
                     else if (suit == 3)
                     {
                         deck.Add(new Card() { Suit = "Diamonds", Value = value });
+                        deck[count].setScore();
                         count++;
                     }
                     else if (suit == 4)
                     {
                         deck.Add(new Card() { Suit = "Hearts", Value = value });
+                        deck[count].setScore();
                         count++;
                     }
                 }
