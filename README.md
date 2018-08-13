@@ -1,1 +1,1 @@
-I am creating a console application to play the card game Blackjack. 
+This is a re-creation of the card game, Blackjack, in C#. It runs in the console.
